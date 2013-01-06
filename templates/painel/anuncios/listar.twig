@@ -1,0 +1,68 @@
+{% extends 'painel/base.twig' %}
+
+{% block conteudo %}
+{{ widget.accordion(block('head'), block('body')) }}
+{% endblock %}
+
+{% block head %}
+<div class="pull-left">Veículos cadastrados</div>
+<div class="pull-right">
+	<a href="{{ urlFor('painel/anuncios') }}">Todos</a>
+	{% for tipo in tipos_de_veiculos %}
+	| <a href="{{ urlFor('painel/anuncios', {tipo_veiculo : tipo.codigo_plural}) }}">{{ tipo.descricao_plural }}</a>
+	{% endfor %}
+</div>
+{% endblock %}
+
+{% block body %}
+{% if veiculos is empty %}
+<div class="alert">Nenhum anúncio nesta categoria.</div>
+{% else %}
+<table id="lista-anuncios" class="table table-hover">
+	<tbody>
+		{% for veiculo in veiculos %}
+		<tr>
+			<td><strong>{{ veiculo.data_criacao | time('%d') }}</strong> {{ veiculo.data_criacao | time('%b/%y') | upper }}</td>
+			<td>
+				{{ veiculo.descricao }}
+				
+			</td>
+			<td>{{ veiculo.tipo.find_one.descricao }}</td>
+			<td>
+				{% if veiculo.valor_promocional > veiculo.valor  %}
+				<del>R$ {{ veiculo.valor | number_format(2, ',', '.') }}</del> <ins>R$ {{ veiculo.promocional | number_format(2, ',', '.') }}</ins>
+				{% else %}
+				R$ {{ veiculo.valor | number_format(2, ',', '.') }}
+				{% endif %}
+			</td>
+			<td>
+				<div class="btn-toolbar pull-right">
+					<div class="btn-group">
+						<a href="#" class="btn btn-mini">Visualizar</a>
+						<a href="#" class="btn btn-mini">Tirar destaque</a>
+						<a href="{{ urlFor('painel/anuncio/editar', {id : veiculo.cod_veiculo}) }}" class="btn btn-mini">Alterar</a>
+						<a href="#" class="btn btn-mini">Apagar</a>
+					</div>
+				</div>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endif %}
+
+{{ widget.paginacao(paginacao) }}
+{% endblock %}
+
+{% block estilos %}
+<style>
+del {
+	color: #aaa;
+}
+
+ins {
+	color: #3A87AD;
+	text-decoration: none;
+}
+</style>
+{% endblock %}

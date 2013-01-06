@@ -1,0 +1,7 @@
+Options +FollowSymLinks -Indexes
+
+RewriteEngine On
+RewriteBase /cv2/
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule .* index.php [L,QSA]

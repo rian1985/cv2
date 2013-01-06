@@ -1,0 +1,215 @@
+{% extends 'painel/anuncios/form.twig' %}
+
+{% set direcoes = ['Hidráulica', 'Mecânica', 'Outra'] %}
+{% set tracoes = ['4x2', '4x4', '6x2', '6x4', '6x6'] %}
+{% set sistemas_de_freios = ['Ar', 'Misto'] %}
+{% set cores = ['Amarelo', 'Azul', 'Branco', 'Cinza', 'Dourado', 'Laranja', 'Prata',
+				'Preto', 'Verde', 'Vermelho', 'Vinho', 'Outro'] %}
+
+{% block exemplo_descricao %}(ex. Ford 430){% endblock %}
+
+{% block caracteristicas_do_veiculo %}
+<div class="row-fluid">
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="chave_marca">Marca</label>
+			<div class="controls">
+				<select id="chave_marca" name="chave_marca">
+					<option value="null"></option>
+					{% for marca in tipo_veiculo.marcas.find_many %}
+					<option value="{{ marca.cod_marca }}"{% if veiculo.chave_marca == marca.cod_marca %} selected="selected"{% endif %}>{{ marca.descricao }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="transmissao">Transmissão</label>
+			<div class="controls">
+				<input type="text" id="transmissao" name="transmissao" value="{{ veiculo.transmissao }}" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="ano">Ano</label>
+			<div class="controls">
+				<select id="ano" name="ano">
+					<option value="null"></option>
+					{% for ano in ('now' | date('Y'))..1960 %}
+					<option value="{{ ano }}"{% if veiculo.ano == ano %} selected="selected"{% endif %}>{{ ano }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="row-fluid">
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="direcao">Direção</label>
+			<div class="controls">
+				<select id="direcao" name="direcao">
+					<option value="null"></option>
+					{% for direcao in direcoes %}
+					<option value="{{ direcao }}"{% if veiculo.direcao == direcao %} selected="selected"{% endif %}>{{ direcao }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="quilometros">Quilômetros</label>
+			<div class="controls">
+				<input type="text" id="quilometros" name="quilometros" value="{{ veiculo.quilometros }}" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="tracao">Tração</label>
+			<div class="controls">
+				<select id="tracao" name="tracao">
+					<option value="null"></option>
+					{% for tracao in tracoes %}
+					<option value="{{ tracao }}"{% if veiculo.tracao == tracao %} selected="selected"{% endif %}>{{ tracao }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row-fluid">
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="capacidade_tracao">Capacidade de tração</label>
+			<div class="controls">
+				<input type="text" id="capacidade_tracao" name="capacidade_tracao" value="{{ veiculo.capacidade_tracao }}" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="capacidade_carga">Capacidade de carga</label>
+			<div class="controls">
+				<input type="text" id="capacidade_carga" name="capacidade_carga" value="{{ veiculo.capacidade_carga }}" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="potencia_maxima">Potência máxima (RPM-CV)</label>
+			<div class="controls">
+				<input type="text" id="potencia_maxima" name="potencia_maxima" value="{{ veiculo.potencia_maxima }}" />
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row-fluid">
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="medidas">Medidas do pneu</label>
+			<div class="controls">
+				<input type="text" id="medidas" name="medidas" value="{{ veiculo.medidas }}" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="motor">Marca do motor</label>
+			<div class="controls">
+				<input type="text" id="motor" name="motor" value="{{ veiculo.motor }}" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="freios">Sistema de freios</label>
+			<div class="controls">
+				<select id="freios" name="freios">
+					<option value="null"></option>
+					{% for freios in sistemas_de_freios %}
+					<option value="{{ freios }}"{% if veiculo.freios == freios %} selected="selected"{% endif %}>{{ freios }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row-fluid">
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="">Cor</label>
+			<div class="controls">
+				<select id="cor" name="cor">
+					<option value="null"></option>
+					{% for cor in cores %}
+					<option value="{{ cor }}"{% if veiculo.cor == cor %} selected="selected"{% endif %}>{{ cor }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="unico_dono">Único dono?</label>
+			<div class="controls">
+				<select id="unico_dono" name="unico_dono">
+					<option value="null"></option>
+					<option value="true"{% if veiculo.unico_dono is not null and veiculo.unico_dono == true %} selected="selected"{% endif %}>Sim</option>
+					<option value="false"{% if veiculo.unico_dono is not null and veiculo.unico_dono == false %} selected="selected"{% endif %}>Não</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="novo">Condições do veículo</label>
+			<div class="controls">
+				<select id="novo" name="novo">
+					<option value="null"></option>
+					<option value="true"{% if veiculo.novo is not null and veiculo.novo == true %} selected="selected"{% endif %}>Novo</option>
+					<option value="false"{% if veiculo.novo is not null and veiculo.novo == false %} selected="selected"{% endif %}>Usado</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row-fluid">
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="valor">Valor (R$)</label>
+			<div class="controls">
+				<input type="text" id="valor" name="valor" value="{{ veiculo.valor }}" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="span4">
+		<div class="control-group">
+			<label class="control-label" for="valor_promocional">Valor promocional (R$)</label>
+			<div class="controls">
+				<input type="text" id="valor_promocional" name="valor_promocional" value="{{ veiculo.valor_promocional }}" />
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,209 @@
+{% import 'painel/widgets.twig' as widget %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<title>{% if vendedor %}{{ vendedor.nomeExibido }} &ndash; {% endif %}Painel Administrativo</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Painel administrativo da sua revenda">
+	<meta name="author" content="">
+	
+	<link href="{{ urlFor('root') }}thirdparty/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<style>
+		body {
+			padding-top: 60px;
+		}
+	</style>
+	<link href="{{ urlFor('root') }}thirdparty/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="{{ urlFor('root') }}thirdparty/jquery-ui/css/bootstrap/jquery-ui.css" rel="stylesheet">
+
+	<!--[if lt IE 9]>
+	<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	{% block estilos %}{% endblock %}
+</head>
+
+<body>
+
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span>
+				</a>
+				
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li><a href="{{ urlFor('painel') }}">Home</a></li>
+						<li><a href="{#{ urlFor('painel/meusdados') }#}">Meus dados</a></li>
+						<li><a href="{{ urlFor('painel/logout') }}">Sair</a></li>
+					</ul>
+					
+					{% if usuario.vendedor.find_one.mensagens.find_many is not empty %}
+					<ul class="nav pull-right">
+						<li>
+							<a href="{#{ urlFor('painel/mensagens') }#}"><span class="badge badge-info">{{ usuario.vendedor.find_one.mensagens.count }}</span> Mensagens</a>
+						</li>
+					</ul>
+					{% endif %}
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="span3">
+				<img src="{{ urlFor('root') }}img/painel/logo.png" />
+			</div>
+			
+			<div class="span9">
+				<div class="pull-right">
+					{% spaceless %}
+					<a href="{{ urlFor('painel/anuncio/adicionar', {tipo_veiculo : 'carro'}) }}" title="Anunciar carro" class="btn">
+						<img src="{{ urlFor('root') }}img/icones/carro.png" /><br />Carro
+					</a>
+					{% endspaceless %}
+					{% spaceless %}
+					<a href="{{ urlFor('painel/anuncio/adicionar', {tipo_veiculo : 'moto'}) }}" title="Anunciar moto" class="btn">
+						<img src="{{ urlFor('root') }}img/icones/moto.png" /><br />Moto
+					</a>
+					{% endspaceless %}
+					{% spaceless %}
+					<a href="{{ urlFor('painel/anuncio/adicionar', {tipo_veiculo : 'caminhao'}) }}" title="Anunciar caminhão" class="btn">
+						<img src="{{ urlFor('root') }}img/icones/caminhao.png" /><br />Caminhão
+					</a>
+					{% endspaceless %}
+					{% spaceless %}
+					<a href="{{ urlFor('painel/anuncio/adicionar', {tipo_veiculo : 'onibus'}) }}" title="Anunciar ônibus" class="btn">
+						<img src="{{ urlFor('root') }}img/icones/onibus.png" /><br />Ônibus
+					</a>
+					{% endspaceless %}
+					{% spaceless %}
+					<a href="{{ urlFor('painel/anuncio/adicionar', {tipo_veiculo : 'nautico'}) }}" title="Anunciar veículo náutico" class="btn">
+						<img src="{{ urlFor('root') }}img/icones/nautica.png" /><br />Náutica
+					</a>
+					{% endspaceless %}
+					{% spaceless %}
+					<a href="{{ urlFor('painel/anuncio/adicionar', {tipo_veiculo : 'outro'}) }}" title="Anunciar outro tipo de veículo" class="btn">
+						<img src="{{ urlFor('root') }}img/icones/outros.png" /><br />Outros
+					</a>
+					{% endspaceless %}
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="span12">
+				<div class="well" style="background-color: white; margin-top: 12px">
+					<div class="row-fluid">
+						<div class="span3">
+						{% block barra_lateral %}
+							<ul class="nav nav-list">
+								<li><a href="">Resumo</a></li>
+								
+								<li class="nav-header">Meus anúncios</li>
+								<li><a href="{{ urlFor('painel/anuncios') }}">Anúncios</a></li>
+								<li><a href="">Vendidos</a></li>
+								<li><a href="">Propostas recebidas</a></li>
+								<li><a href="">Lixeira</a></li>
+								
+								<li class="nav-header">Usuários</li>
+								<li><a href="{{ urlFor('painel/usuarios') }}">Usuários</a></li>
+								<li><a href="{{ urlFor('painel/usuario/adicionar') }}">Novo usuário</a></li>
+								
+								<li class="nav-header">Configurações</li>
+								<li><a href="">Menus de seu site</a></li>
+								<li><a href="">Aparência site</a></li>
+								<li><a href="">Contato</a></li>
+								
+								<li class="nav-header">Pagamentos e faturas</li>
+								<li><a href="">Faturas a pagar</a></li>
+								<li><a href="">Histórico de faturas</a></li>
+							</ul>
+						{% endblock %}
+						</div>
+						
+						<div class="span9">
+						{% block conteudo %}
+							
+							<div class="accordion">
+								<div class="accordion-group">
+									<div class="accordion-heading" style="background-color: #f9f9f9">
+										<span class="accordion-toggle">Avisos</span>
+									</div>
+									
+									<div class="accordion-body">
+										<div class="accordion-inner">
+											<p>Nova implementação <a href="">saiba mais</a></p>
+										</div>
+									</div>
+								</div>
+								
+								<div class="accordion-group">
+									<div class="accordion-heading" style="background-color: #f9f9f9">
+										<span class="accordion-toggle">Faturas a pagar</span>
+									</div>
+									
+									<div class="accordion-body">
+										<div class="accordion-inner">
+											<p>Você não tem faturas a pagar no momento.</p>
+										</div>
+									</div>
+								</div>
+								
+								<div class="accordion-group">
+									<div class="accordion-heading" style="background-color: #f9f9f9">
+										<span class="accordion-toggle">Últimos veículos cadastrados</span>
+									</div>
+									
+									<div class="accordion-body">
+										<div class="accordion-inner">
+											<table class="table table-hover">
+												<tr>
+													<td><strong>30</strong> OUT/12</td>
+													<td>Toyota - Corsa</td>
+													<td>caminhão</td>
+													<td>R$ 20.000,00</td>
+												</tr>
+												
+												<tr>
+													<td><strong>29</strong> OUT/12</td>
+													<td>Toyota - Corsa</td>
+													<td>carro</td>
+													<td>R$ 20.000,00</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+								
+								
+							</div>
+							
+						{% endblock %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="span12">
+				<p class="pull-centered">
+					<small>® Painel Central do Veículo - © Todos os direitos reservados.</small>
+				</p>
+			</div>
+		</div>
+	</div>
+	
+	<script src="{{ urlFor('root') }}thirdparty/jquery.js"></script>
+	<script src="{{ urlFor('root') }}thirdparty/bootstrap/js/bootstrap.js"></script>
+	<script src="{{ urlFor('root') }}thirdparty/jquery-ui/js/jquery-ui-notabs.js"></script>
+	{% block scripts %}
+	{% endblock %}
+
+</body>
+</html>

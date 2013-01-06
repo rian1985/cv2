@@ -1,0 +1,10 @@
+{
+	"require": {
+		"slim/slim": "*",
+		"slim/extras": "*",
+		"twig/twig": "*",
+		"j4mie/idiorm": "*",
+		"j4mie/paris": "*",
+		"phpunit/phpunit": "*"
+	}
+}

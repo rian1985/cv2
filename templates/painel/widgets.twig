@@ -1,0 +1,37 @@
+{% macro accordion(head, body) %}
+<div class="accordion">
+	<div class="accordion-group">
+		<div class="accordion-heading" style="background-color: #f9f9f9; padding: 8px 15px">
+			<div class="clearfix">
+				{{ head  | raw }}
+			</div>
+		</div>
+		
+		<div class="accordion-body">
+			<div class="accordion-inner">
+				{{ body  | raw }}
+			</div>
+		</div>
+	</div>
+</div>
+{% endmacro %}
+
+{% macro paginacao(dados) %}
+{% if dados %}
+<div class="pagination pagination-centered">
+<ul>
+	{% if dados.esquerda != false %}
+	<li><a href="{{ dados.esquerda.url }}">&laquo;</a></li>
+	{% endif %}
+	
+	{% for pagina in dados.intervalo %}
+	<li{% if pagina.numero == dados.pagina_ativa %} class="active"{% endif %}><a href="{{ pagina.url }}">{{ pagina.numero }}</a></li>
+	{% endfor %}
+	
+	{% if dados.direita != false %}
+	<li><a href="{{ dados.direita.url }}">&raquo;</a></li>
+	{% endif %}
+</ul>
+</div>
+{% endif %}
+{% endmacro %}

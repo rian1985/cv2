@@ -1,0 +1,48 @@
+body{
+	margin:				0;
+	font-family:		arial;
+}
+
+/* CADASTRO */
+
+.LinkAlteraSenha{
+	color:#0000FF;
+	font-weight:normal;
+}
+
+.LinkAlteraUsuario{
+	color:#0000FF;
+	font-weight:normal;
+}
+
+.CaixaLoginPagina{
+	padding:30px;
+	width:300px;
+	margin:60px auto 0 auto;
+
+	background: 					#FFFFFF; /* Old browsers */
+	background: 					-moz-linear-gradient(top,  #FFFFFF 0%, #dfdfdf 100%); /* FF3.6+ */
+	background: 					-webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#dfdfdf)); /* Chrome,Safari4+ */
+	background: 					-webkit-linear-gradient(top,  #FFFFFF 0%,#dfdfdf 100%); /* Chrome10+,Safari5.1+ */
+	background:						-o-linear-gradient(top,  #FFFFFF 0%,#dfdfdf 100%); /* Opera 11.10+ */
+	background: 					-ms-linear-gradient(top,  #FFFFFF 0%,#dfdfdf 100%); /* IE10+ */
+	background: 					linear-gradient(top,  #FFFFFF 0%,#dfdfdf 100%); /* W3C */
+	filter: 						progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#dfdfdf',GradientType=0 ); /* IE6-9 */
+	border:							1px solid #dfdfdf;
+}
+
+.btPaginaLogin{
+	border:							0;
+	background-color:				#006699;
+	color:							#FFFFFF;
+	padding:						10px 20px;
+	font-weight:					bold;
+	border-radius:					5px;
+	margin-top:						20px;
+	margin-left:					25px
+}
+
+.erro{
+	color:#990000;
+	display:none;
+}

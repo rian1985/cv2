@@ -1,0 +1,316 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8" />
+	
+	<title>{% if titulo_pagina %}{{ titulo_pagina }} &ndash; {% endif %}Portal Central do Veículo</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link href="{{ urlFor('root') }}css/portal.css" rel="stylesheet" type="text/css" media="screen" charset="utf-8" />
+	<link href="{{ urlFor('root') }}thirdparty/jquery-ui/css/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" charset="utf-8" />
+	<link href="{{ urlFor('root') }}thirdparty/prettyGallery/css/prettyGallery.css" rel="stylesheet" type="text/css" media="screen" charset="utf-8" />
+	
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	
+</head>
+
+<body>
+	<header>
+		<div class="header-topo">
+			<div class="header-topo-inner">
+				<div id="logo-cv"></div>
+				
+				<ul class="header-topo-links">
+	                <li>
+	                	<a href="{{ urlFor('portal/index') }}" class="header-topo-link-a">centraldoveiculo.com.br</a>
+	                </li>
+	                <li class="separador">|</li>
+	                <li>
+	                	<a href="{{ urlFor('portal/index') }}" class="header-topo-link-b">notícias</a>
+	                </li>
+	                <li class="separador">|</li>
+	                <li>
+	                	<a href="{{ urlFor('portal/index') }}" class="header-topo-link-c">anúncie</a>
+	                </li>
+	                <li class="separador">|</li>
+	                <li>
+	                	<a href="{{ urlFor('portal/index') }}" class="header-topo-link-d">entrar</a>
+	                </li>
+	            </ul>
+	            
+	            <div class="header-topo-redes-sociais">
+	            	<div class="texto">Estamos também aqui: </div>
+	            	<div class="links">
+	            		<a href="http://www.facebook.com/central.doveiculo" target="_blank" title="Nossa página no Facebook"><img src="{{ urlFor('root') }}img/redes/face.jpg" alt="Facebook" /></a>
+	            		<a href="http://twitter.com/portalcv" target="_blank" title="Nosso perfil no Twitter"><img src="{{ urlFor('root') }}img/redes/twitter.jpg" alt="Twitter" /></a>
+	            	</div>
+	            </div>
+			</div>
+		</div>
+		
+		<div class="header-login">
+			<div class="header-login-inner">
+				<form action="{{ urlFor('portal/index') }}" method="post" class="header-login-form">
+					<input type="text" name="login" placeholder="Usuário" />
+					<input type="password" name="senha" placeholder="Senha" />
+					<button type="submit">Entrar</button>
+					<span class="header-login-esqueci"><a href={{ urlFor('portal/index') }}>Esqueci minha senha</a></span>
+				</form>
+			</div>
+		</div>
+		
+	</header>
+	<section>
+	
+		<div class="CaixaCadastro">
+	    
+	    	<h1>Cadastre-se, é GRATUITO</h1>
+	        Nome<br>
+	        <input type="text" class="input"><br>
+	        
+	        Usuário (e-mail)<br>
+	        <input type="text" class="input"><br>
+	        
+	        Senha<br>
+	        <input type="password" class="input"><br>
+	        <input type="submit" value="Cadastrar" class="BtCadastrar">
+	    	<div style="clear:both"></div>
+	        
+	    </div>
+	    
+	    <div style="float:left;margin-left:20px;width:643px;">
+	    	<div id="tabs" class="Buscador">
+			    <ul>
+			        <li><a href="#tabs-1">carros</a></li>
+			        <li><a href="#tabs-2">motos</a></li>
+			        <li><a href="#tabs-3">caminhões</a></li>
+			        <li><a href="#tabs-4">ônibus</a></li>
+			        <li><a href="#tabs-5">naútica</a></li>
+			        <li><a href="#tabs-6">outros</a></li>
+			    </ul>
+			    <div id="tabs-1">
+			    
+			    	<div class="Campos">Marca<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos">Veículo<br><input type="text" class="input"></div>
+			        <div class="Campos">Ano<br><select class="select"><option>Selecione</option></select></div>
+			        
+			        <div style="clear:both"></div>
+			    
+			    	<div class="Campos">Estado<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos">Cidade<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos" id="Botao"><input type="submit" value="Buscar" class="BtBusca"> <input type="checkbox"> Apenas lojas</div>
+			        
+			        <div style="clear:both"></div>
+			    
+			    </div>
+			    <div id="tabs-2">
+			    
+			    	<div class="Campos">Marca<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos">Veículo<br><input type="text" class="input"></div>
+			        <div class="Campos">Ano<br><select class="select"><option>Selecione</option></select></div>
+			        
+			        <div style="clear:both"></div>
+			    
+			    	<div class="Campos">Estado<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos">Cidade<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos" id="Botao"><input type="submit" value="Buscar" class="BtBusca"> <input type="checkbox"> Apenas lojas</div>
+			        
+			        <div style="clear:both"></div>
+			    
+			    </div>
+			    <div id="tabs-3">
+			    
+			    	<div class="Campos">Marca<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos">Veículo<br><input type="text" class="input"></div>
+			        <div class="Campos">Ano<br><select class="select"><option>Selecione</option></select></div>
+			        
+			        <div style="clear:both"></div>
+			    
+			    	<div class="Campos">Estado<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos">Cidade<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos" id="Botao"><input type="submit" value="Buscar" class="BtBusca"> <input type="checkbox"> Apenas lojas</div>
+			        
+			        <div style="clear:both"></div>
+			    
+			    </div>
+			    <div id="tabs-4">
+			    
+			    	<div class="Campos">Marca<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos">Veículo<br><input type="text" class="input"></div>
+			        <div class="Campos">Ano<br><select class="select"><option>Selecione</option></select></div>
+			        
+			        <div style="clear:both"></div>
+			    
+			    	<div class="Campos">Estado<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos">Cidade<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos" id="Botao"><input type="submit" value="Buscar" class="BtBusca"> <input type="checkbox"> Apenas lojas</div>
+			        
+			        <div style="clear:both"></div>
+			    
+			    </div>
+			    <div id="tabs-5">
+			    
+			    	<div class="Campos">Marca<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos">Veículo<br><input type="text" class="input"></div>
+			        <div class="Campos">Ano<br><select class="select"><option>Selecione</option></select></div>
+			        
+			        <div style="clear:both"></div>
+			    
+			    	<div class="Campos">Estado<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos">Cidade<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos" id="Botao"><input type="submit" value="Buscar" class="BtBusca"> <input type="checkbox"> Apenas lojas</div>
+			        
+			        <div style="clear:both"></div>
+			    
+			    </div>
+			    <div id="tabs-6">
+			    
+			    	<div class="Campos">Marca<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos">Veículo<br><input type="text" class="input"></div>
+			        <div class="Campos">Ano<br><select class="select"><option>Selecione</option></select></div>
+			        
+			        <div style="clear:both"></div>
+			    
+			    	<div class="Campos">Estado<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos">Cidade<br><select class="select"><option>Selecione</option></select></div>
+			        <div class="Campos" id="Botao"><input type="submit" value="Buscar" class="BtBusca"> <input type="checkbox"> Apenas lojas</div>
+			        
+			        <div style="clear:both"></div>
+			    
+			    </div>
+			</div>
+	    </div>
+	    
+	    <div class="BannerHome"></div>
+	    
+	    <div style="clear:both"></div>
+	    
+	    <div id="tabsHome" class="DestaquesHome">
+	        <ul>
+	            <li><a href="#tabs-1_home">carros</a></li>
+	            <li><a href="#tabs-2_home">motos</a></li>
+	            <li><a href="#tabs-3_home">caminhões</a></li>
+	            <li><a href="#tabs-4_home">ônibus</a></li>
+	            <li><a href="#tabs-5_home">naútica</a></li>
+	            <li><a href="#tabs-6_home">outros</a></li>
+	        </ul>
+	        <div id="tabs-1_home">
+	        
+	        	<ul class="prettyGallery">
+					{% for i in 1..20 %}
+	                <li>
+	                
+	                	<div class="DestaqueHomeItem">
+	                    
+	                    	<div class="imagem"><a href="index.php" class="LinkFotoDestaque"></a></div>
+	                        <div class="DadosDestaque">
+	                            <strong>Chevrolet - Vectra</strong><br>
+	                            Ano 2011/2012<br>
+	                            Gaudério Veículos<br>
+	                            <span class="ValorDestaque">R$ 22.000,00</span>
+	                        </div>
+	                    
+	                    </div>
+	                
+	                </li>
+	                {% endfor %}
+	            </ul>
+	            
+	            <div style="clear:both"></div>
+	        
+	        </div>
+	        <div id="tabs-2_home">
+	        
+	        	<ul class="prettyGallery">
+	            	{% for i in 1..20 %}
+	                <li>
+	                
+	                	<div class="DestaqueHomeItem">
+	                    
+	                    	<div class="imagem"><a href="index.php" class="LinkFotoDestaque"></a></div>
+	                        <div class="DadosDestaque">
+	                            <strong>Chevrolet - Vectra</strong><br>
+	                            Ano 2011/2012<br>
+	                            Gaudério Veículos<br>
+	                            <span class="ValorDestaque">R$ 22.000,00</span>
+	                        </div>
+	                    
+	                    </div>
+	                
+	                </li>
+	                {% endfor %}
+	            </ul>
+	            
+	            <div style="clear:both"></div>
+	        
+	        </div>
+	        <div id="tabs-3_home"></div>
+	        <div id="tabs-4_home"></div>
+	        <div id="tabs-5_home"></div>
+	        <div id="tabs-6_home"></div>
+	    </div>
+	
+	</section>
+	<footer>
+	
+		<div class="divRodape">
+	    
+	    	<ul class="MenuRodape">
+	        	<li><a href="index.php">Home</a></li>
+	        	<li><a href="index.php">Notícias</a></li>
+	        	<li><a href="index.php">Anuncie</a></li>
+	        	<li><a href="index.php">Entrar</a></li>
+	        	<li><a href="index.php">Facebook</a></li>
+	        	<li><a href="index.php">Twitter</a></li>
+	        	<li><a href="index.php">Google +</a></li>
+	        	<li><a href="index.php">Orkut</a></li>
+	        </ul>
+	    
+	    </div>
+	    <div class="divRodape">
+	    
+	    	<h1>Últimas notícias</h1>
+	        <ul class="NoticiasRodape">
+	        	<li><div class="ImgNoticiaRodape"></div> <a href="index.php">Título da notícia aqui, resumido.</a></li>
+	            <li><div class="ImgNoticiaRodape"></div> <a href="index.php">Título da notícia aqui, resumido.</a></li>
+	            <li><div class="ImgNoticiaRodape"></div> <a href="index.php">Título da notícia aqui, resumido.</a></li>
+	            <li><div class="ImgNoticiaRodape"></div> <a href="index.php">Título da notícia aqui, resumido.</a></li>
+	        </ul>
+	    
+	    </div>
+	    <div class="divRodape">
+	    	
+	        <h1>&nbsp;</h1>
+	        <ul class="NoticiasRodape">
+	        	<li><div class="ImgNoticiaRodape"></div> <a href="index.php">Título da notícia aqui, resumido.</a></li>
+	            <li><div class="ImgNoticiaRodape"></div> <a href="index.php">Título da notícia aqui, resumido.</a></li>
+	            <li><div class="ImgNoticiaRodape"></div> <a href="index.php">Título da notícia aqui, resumido.</a></li>
+	            <li><div class="ImgNoticiaRodape"></div> <a href="index.php">Título da notícia aqui, resumido.</a></li>
+	        </ul>
+	        
+	    </div>
+	    
+	    <div style="clear:both"></div>
+	    
+	    <div style="float:left;margin-left:-10px;width:10px;height:8px;margin-top:-8px"><img src="{{ urlFor('root') }}img/canto_esq_rodape.png"></div>
+	    <div style="float:right;margin-right:-10px;width:10px;height:16px;margin-top:-8px"><img src="{{ urlFor('root') }}img/canto_dir_rodape.png"></div>
+	    
+	    <div style="clear:both"></div>
+	    
+	    <div style="width:960px;margin-left:-10px;padding:10px;background-color:#111111;font-size:10px;font-family:Verdana, Arial, Helvetica, sans-serif;color:#666666">Copyright © 2012 Made, todos os direitos reservados.<div style="float:right">Portal <a href="http://www.centraldoveiculo.com.br" style="color:#666666">centraldoveiculo.com.br</a> - Mais um produto inovaws.com.br</div></div>
+	    
+	    <div style="clear:both"></div>
+	
+	</footer>
+	<script src="{{ urlFor('root') }}thirdparty/jquery.js"></script>
+    <script src="{{ urlFor('root') }}thirdparty/jquery-ui/js/jquery-ui.js"></script>
+    <script src="{{ urlFor('root') }}thirdparty/prettyGallery/js/jquery.prettyGallery.js" charset="utf-8"></script>
+    <script src="{{ urlFor('root') }}js/portal.js"></script>
+    <script src="{{ urlFor('root') }}thirdparty/jquery.maskedinput.js"></script>
+	{% block scripts %}{% endblock %}
+</body>
+</html>

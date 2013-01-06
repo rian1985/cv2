@@ -1,0 +1,30 @@
+{% extends 'painel/base.twig' %}
+
+{% block conteudo %}
+	{{ widget.accordion('Usuários', block('usuarios')) }}
+{% endblock %}
+
+{% block usuarios %}
+	<table class="table table-hover">
+		<tbody>
+			{% for usuario in usuarios %}
+			<tr>
+				<td>{{ usuario.nome }}</td>
+				<td>{{ usuario.usuario }}</td>
+				<td>
+					<div class="pull-right">
+						<div class="btn-group">
+							<a href="{{ urlFor('painel/usuario/editar', {id : usuario.cod_usuario}) }}" class="btn btn-mini">Editar</a>
+							{% if usuario.deletavel %}
+							<a href="{{ urlFor('painel/usuario/deletar', {id : usuario.cod_usuario}) }}" class="btn btn-mini">Deletar</a>
+							{% endif %}
+						</div>
+					</div>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	
+	{{ widget.paginacao(paginacao) }}
+{% endblock %}

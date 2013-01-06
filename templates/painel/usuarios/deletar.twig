@@ -1,0 +1,12 @@
+{% extends 'painel/base.twig' %}
+
+{% block conteudo %}
+<div class="well">
+	<h1>Atenção!</h1>
+	<p>Deseja realmente <span class="lead">deletar definitivamente</span> o usuário <strong>{{ usuario.nome }}</strong> (<em>{{ usuario.usuario }}</em>)?</p>
+	<div class="form-actions">
+		<a href="{{ urlFor('painel/usuario/deletar/confirmar', {id : usuario.cod_usuario}) }}" class="btn btn-primary">Sim</a>
+		<a href="{{ this_path != referer_path ? referer_path : urlFor('painel/usuarios') }}" class="btn">Não</a>
+	</div>
+</div>
+{% endblock %}

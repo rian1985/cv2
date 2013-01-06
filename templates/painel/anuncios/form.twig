@@ -1,0 +1,218 @@
+{% extends 'painel/base.twig' %}
+
+{% block conteudo %}
+
+{% if flash.erros is not empty %}
+<div class="alert alert-error">
+<p><strong>Ocorreram erros ao salvar!</strong></p>
+<ul>
+	{% for erro in flash.erros %}
+	<li>{{ erro }}</li>
+	{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+{% if flash.sucesso %}
+<div class="alert alert-success">
+<strong>Salvo com sucesso!</strong>
+</div>
+{% endif %}
+
+<form action="{{ app.request.path }}" method="post" class="form-vertical">
+	{{ widget.accordion('Dados do veículo', block('dados_do_veiculo')) }}
+	{{ widget.accordion('Fotos', block('fotos')) }}
+	{{ widget.accordion('Localização do veículo', block('localizacao_do_veiculo')) }}
+	{{ widget.accordion('Características do Veículo', block('caracteristicas_do_veiculo')) }}
+	{% if veiculo.itensAdicionaisDisponiveis is not empty %}
+	{{ widget.accordion('Itens adicionais do veículo', block('itens_adicionais_do_veiculo')) }}
+	{% endif %}
+	{{ widget.accordion('Observações', block('observacoes')) }}
+	
+	<div class="form-actions">
+		<button type="submit" class="btn btn-primary">Salvar</button>
+	</div>
+</form>
+{% endblock %}
+
+{% block dados_do_veiculo %}
+<div class="row-fluid">
+	<div class="span12">
+		<div class="control-group">
+			<label class="control-label" for="descricao">Descrição do veículo {% block exemplo_descricao %}{% endblock %}</label>
+			<div class="controls">
+				<input type="text" name="descricao" id="descricao" value="{{ veiculo.descricao }}" class="span8" />
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block fotos %}
+<ul id="fotos" class="thumbnails">
+	{% for i,foto in veiculo.fotos %}
+	<li class="span2">
+		<div class="thumbnail">
+			<img class="foto" src="{{ urlFor('root') }}img/icones/image_128.png" />
+			<input type="hidden" id="foto_{{ i }}" name="foto_{{ i }}" value="{{ attribute(veiculo, 'foto_' ~ i) }}" />
+			<ul class="nav nav-list">
+				<li><a href="#" class="adicionar-foto"><i class="icon-plus"></i>Adicionar</a></li>
+				<li><a href="#" class="remover-foto"><i class="icon-minus"></i>Remover</a></li>
+			</ul>
+		</div>
+	</li>
+	{% endfor %}
+</ul>
+{% endblock %}
+
+{% block localizacao_do_veiculo %}
+<div class="row-fluid">
+	<div class="span12">
+		<div class="control-group">
+			<label class="control-label" for="chave_localizacao">Localização</label>
+			<div class="controls">
+				<select id="chave_localizacao" name="chave_localizacao" class="span8">
+					<option value="null"></option>
+					{% for localizacao in vendedor.localizacoes.find_many %}
+					<option value="{{ localizacao.cod_localizacao }}"{% if veiculo.chave_localizacao == localizacao.cod_localizacao %} selected="selected"{% endif %}>{{ localizacao.descricao }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block itens_adicionais_do_veiculo %}
+
+{% for secao,itens in veiculo.itensAdicionaisDisponiveis %}
+<fieldset>
+	<legend>{{ secao }}</legend>
+	
+	{% for k in range(0, (itens | length) - 1, 3) %}
+	<div class="row-fluid">
+		{% for i in range(k, k + 2 > (itens | length) - 1 ? (itens | length) - 1 : k + 2) %}
+		<div class="span4">
+		<label class="checkbox">
+			<input type="checkbox" name="itens[]" value="{{ itens[i] }}" {% if itens[i] in veiculo.itensAdicionais %} checked="checked"{% endif %} />
+			{{ itens[i] }}
+		</label>
+		</div>
+		{% endfor %}
+		
+	</div>
+	{% endfor %}
+</fieldset>
+{% endfor %}
+
+{% endblock %}
+
+{% block observacoes %}
+<div class="row-fluid">
+	<div class="span12">
+		<div class="control-group">
+			<div class="controls">
+				<textarea name="observacoes" id="observacoes" rows="3" class="span12">{{ veiculo.observacoes }}</textarea>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ urlFor('root') }}thirdparty/plupload/js/plupload.full.js"></script>
+<script src="{{ urlFor('root') }}thirdparty/jquery.maskMoney.js"></script>
+<script type="text/javascript">
+var rootUrl = {{ urlFor('root') | json_encode | raw }};
+var adicionarfotoUrl = {{ urlFor('painel/adicionarfoto') | json_encode | raw }};
+var removerfotoUrl = {{ urlFor('painel/removerfoto') | json_encode | raw }};
+var arquivosUrl = rootUrl + {{ ('arquivos/' ~ vendedor.cod_vendedor ~ '/fotos/') | json_encode | raw }};
+
+$(function() {
+	$('#fotos .thumbnail').each(function() {
+		var $this = $(this);
+		var $foto = $this.find('.foto');
+		var $input = $this.find('input');
+		var $add = $this.find('.adicionar-foto');
+		var $remove = $this.find('.remover-foto');
+
+		if (!$add.attr('id')) { 
+			var id;
+			do {
+				id = 'browsebutton' + Math.round(Math.random() * 1e4);
+			} while($('#' + id).size() > 0);
+			$add.attr('id', id);
+		}
+
+		if ($input.val()) {
+			$add.hide();
+			var pathinfo = $input.val().split('.');
+			$foto.attr('src', arquivosUrl + pathinfo[0] + '_P.' + pathinfo[1]);
+		}
+		else
+			$remove.hide();
+
+		var uploader = new plupload.Uploader({
+			runtimes : 'gears,html5,flash,silverlight',
+			browse_button : $add.attr('id'),
+			max_file_size : '10mb',
+			url : adicionarfotoUrl,
+			flash_swf_url : rootUrl + 'thirdparty/plupload/js/plupload.flash.swf',
+			silverlight_xap_url : rootUrl + 'thirdparty/plupload/js/plupload.silverlight.xap',
+			filters : [
+				{title : "Arquivos de imagens", extensions : "jpg,gif,png"}
+			]
+		});
+
+		uploader.bind('FilesAdded', function(up, files) {
+			$.each(files, function(index, file) {
+				if (index != files.length - 1)
+					setTimeout(function() {up.removeFile(file);}, 100);
+			});
+			
+			$foto.fadeTo(0, .5);
+			$foto.attr('src', rootUrl + 'img/icones/image_up_128.png');
+			setTimeout(function() {up.start();}, 100);
+		});
+
+		uploader.bind('Error', function(up, args) {
+			$foto.attr('src', rootUrl + 'img/icones/image_128.png');
+			$foto.fadeTo(0, 1);
+		});
+
+		uploader.bind('UploadProgress', function(up, file) {
+			$foto.stop(true, true).fadeTo(100, file.percent / 100);
+		});
+
+		uploader.bind('FileUploaded', function(up, file, info) {
+			var uploadinfo = $.parseJSON(info.response);
+			$input.val(uploadinfo.name + '.' + uploadinfo.extension);
+			$foto.attr('src', arquivosUrl + uploadinfo.name + '_P.' + uploadinfo.extension);
+			$foto.stop(true, true).fadeTo(400, 1);
+			$add.hide();
+			$remove.show();
+		});
+		
+		uploader.init();
+
+		$remove.on('click', function(event) {
+			$foto.fadeTo(400, 0.5);
+			
+			var pathinfo = $input.val().split('.');
+			$.get(removerfotoUrl.replace(':filename', pathinfo[0]).replace(':extension', pathinfo[1]), function() {
+				$foto.attr('src', rootUrl + 'img/icones/image_128.png');
+				$foto.fadeTo(400, 1);
+				$add.show();
+				$remove.hide();
+				$input.val('');
+			});
+
+			return event.preventDefault();
+		});
+	});
+
+	$('#valor').maskMoney({symbol:'R$ ', showSymbol:false, thousands:'', decimal:',', symbolStay: true});
+	$('#valor_promocional').maskMoney({symbol:'R$ ', showSymbol:false, thousands:'', decimal:',', symbolStay: true});
+});
+</script>
+{% endblock %}

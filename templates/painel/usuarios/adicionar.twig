@@ -1,0 +1,56 @@
+{% extends 'painel/base.twig' %}
+
+{% block conteudo %}
+{{ widget.accordion(block('titulo'), block('corpo')) }}
+{% endblock %}
+
+{% block titulo %}Adicionar novo usuário{% endblock %}
+
+{% block corpo %}
+
+{% if flash.erros is defined %}
+<div class="alert alert-error">
+	<div><strong>Erros na validação dos dados!</strong></div>
+	<ul>
+		{% for erro in flash.erros %}
+		<li>{{ erro }}</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endif %}
+
+<form action="{{ urlFor('painel/usuario/salvar') }}" method="post" class="form-horizontal">
+	<div class="control-group">
+		<label class="control-label">Login</label>
+		<div class="controls">
+			<input type="text" name="login" class="span4"{% if usuario.usuario %} value="{{ usuario.usuario }}" disabled="disabled"{% endif %}{% if flash.login %} value="{{ flash.login }}" {% endif %} />
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">Senha</label>
+		<div class="controls">
+			<input type="password" name="senha" class="span4" />
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">Confirmar senha</label>
+		<div class="controls">
+			<input type="password" name="confirmar-senha" class="span4" />
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">Nome</label>
+		<div class="controls">
+			<input type="text" name="nome"{% if flash.nome %} value="{{ flash.nome }}"{% endif %} class="span6" />
+		</div>
+	</div>
+	
+	<div class="form-actions">
+		<button type="submir" class="btn btn-primary">Salvar alterações</button>
+		<a href="{{ this_path != referer_path ? app.request.referer : urlFor('painel/usuarios') }}" class="btn">Cancelar</a>
+	</div>
+</form>
+{% endblock %}
